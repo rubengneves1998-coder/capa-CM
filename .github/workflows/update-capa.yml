@@ -2,8 +2,8 @@ name: Atualizar Capa Correio da Manhã
 
 on:
   schedule:
-    - cron: "0 6 * * *"   # Corre todos os dias às 6h da manhã (UTC)
-  workflow_dispatch:      # Permite rodar manualmente no GitHub
+    - cron: "0 6 * * *"   # Executa todos os dias às 6h da manhã (UTC)
+  workflow_dispatch:      # Permite rodar manualmente
 
 jobs:
   update:
@@ -21,28 +21,14 @@ jobs:
       - name: Instalar dependências
         run: pip install requests beautifulsoup4
 
-      - name: Atualizar capa
-        run: |
-          python - <<EOF
-import requests
-from bs4 import BeautifulSoup
-
-url = "https://www.vercapas.com/capa/correio-da-manha.html"
-response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
-soup = BeautifulSoup(response.text, "html.parser")
-img_tag = soup.find("img", {"alt": "Correio da Manhã"})
-if img_tag:
-    img_url = img_tag["src"]
-    img_data = requests.get(img_url).content
-    with open("capa.jpg", "wb") as f:
-        f.write(img_data)
-EOF
+      - name: Executar script da capa
+        run: python baixar_capa.py
 
       - name: Commit e Push da nova capa
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Atualizar capa automaticamente"
-          file_pattern: capa.jpg
+          file_pattern: correio-capa.jpg
 
 
  
