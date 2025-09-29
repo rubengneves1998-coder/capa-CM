@@ -2,8 +2,8 @@ name: Atualizar Capa Correio da Manhã
 
 on:
   schedule:
-    - cron: "0 6 * * *"   # Executa todos os dias às 6h da manhã (UTC)
-  workflow_dispatch:      # Permite rodar manualmente
+    - cron: "0 6 * * *"
+  workflow_dispatch:
 
 jobs:
   update:
@@ -29,6 +29,7 @@ jobs:
         with:
           commit_message: "Atualizar capa automaticamente"
           file_pattern: correio-capa.jpg
+
 
 
  
