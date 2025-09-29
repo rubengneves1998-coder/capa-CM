@@ -39,10 +39,9 @@ jobs:
                   f.write(img_data)
           EOF
 
-      - name: Commit e Push da nova capa
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "actions@github.com"
-          git add capa.jpg
-          git commit -m "Atualizar capa automaticamente"
-          git push
+           - name: Commit e Push da nova capa
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Atualizar capa automaticamente"
+          file_pattern: capa.jpg
+ 
