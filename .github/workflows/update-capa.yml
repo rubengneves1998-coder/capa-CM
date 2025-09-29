@@ -3,7 +3,7 @@ name: Atualizar Capa Correio da Manhã
 on:
   schedule:
     - cron: "0 6 * * *"   # Corre todos os dias às 6h da manhã (UTC)
-  workflow_dispatch:      # Permite correr manualmente no GitHub
+  workflow_dispatch:      # Permite rodar manualmente no GitHub
 
 jobs:
   update:
@@ -26,6 +26,7 @@ jobs:
           python - <<EOF
 import requests
 from bs4 import BeautifulSoup
+
 url = "https://www.vercapas.com/capa/correio-da-manha.html"
 response = requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
 soup = BeautifulSoup(response.text, "html.parser")
@@ -42,5 +43,6 @@ EOF
         with:
           commit_message: "Atualizar capa automaticamente"
           file_pattern: capa.jpg
+
 
  
