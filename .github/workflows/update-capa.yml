@@ -4,14 +4,14 @@ name: Atualizar Capa Correio da Manhã
 on:
   schedule:
     - cron: "0 7 * * *"   # 7h UTC = 8h hora local
-  workflow_dispatch:      # Permite correr manualmente
+  workflow_dispatch:      # Permite rodar manualmente
 
 jobs:
   update:
     runs-on: ubuntu-latest
 
     steps:
-      # Passo 1: Fazer checkout do repositório
+      # Passo 1: Checkout do repositório
       - name: Checkout do repositório
         uses: actions/checkout@v3
 
@@ -38,6 +38,5 @@ jobs:
           branch: main
           commit_user_name: "github-actions[bot]"
           commit_user_email: "41898282+github-actions[bot]@users.noreply.github.com"
-          token: ${{ secrets.PAT_TOKEN }}
+          push_options: "--repo=https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/rubengneves1998-coder/capa-CM.git"
 
- 
