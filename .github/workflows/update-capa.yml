@@ -11,9 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Passo 1: Checkout do repositório
+      # Passo 1: Checkout do repositório com token
       - name: Checkout do repositório
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
 
       # Passo 2: Configurar Python
       - name: Configurar Python
@@ -29,7 +31,7 @@ jobs:
       - name: Atualizar capa
         run: python baixar_capa.py
 
-      # Passo 5: Commit e push da nova capa usando PAT_TOKEN
+      # Passo 5: Commit e Push da nova capa
       - name: Commit e Push da nova capa
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
@@ -38,5 +40,5 @@ jobs:
           branch: main
           commit_user_name: "github-actions[bot]"
           commit_user_email: "41898282+github-actions[bot]@users.noreply.github.com"
-          push_options: "--repo=https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/rubengneves1998-coder/capa-CM.git"
+
 
