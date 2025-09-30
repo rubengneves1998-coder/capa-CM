@@ -1,45 +1,31 @@
-name: Atualizar Capa Correio da Manhã
+name: Atualizar capa automaticamente
 
 on:
   schedule:
-    - cron: "0 7 * * *"   # 7h UTC = 8h hora local
-  workflow_dispatch:
+    - cron: "0 8 * * *" # Todos os dias às 8h da manhã (hora UTC)
+  workflow_dispatch: # Permite rodar manualmente no separador "Actions"
 
 jobs:
-  update:
+  atualizar-capa:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout usando token
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.PAT_TOKEN }}
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
 
-      # 2️⃣ Configurar Python
-      - name: Configurar Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
+      - name: Atualizar capa
+        run: |
+          echo "Aqui colocas o comando ou script que gera a nova imagem"
+          # Exemplo: python gerar_capa.py
+          # Para já, assumimos que a imagem é atualizada manualmente/localmente
 
-      # 3️⃣ Instalar dependências
-      - name: Instalar dependências
-        run: pip install requests beautifulsoup4
-
-      # 4️⃣ Baixar capa
-      - name: Baixar capa
-        run: python baixar_capa.py
-
-      # 5️⃣ Commit e push manual
       - name: Commit e push da capa
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add correio-capa.jpg
           git diff-index --quiet HEAD || git commit -m "Atualizar capa automaticamente"
-          git push https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/rubengneves1998-coder/capa-CM.git main
-
-
-
+          git remote set-url origin https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/${{ github.repository }}
+          git push origin main
 
 
