@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Passo 1: Checkout do repositório com token
+      # Passo 1: Checkout do repositório usando o token
       - name: Checkout do repositório
         uses: actions/checkout@v3
         with:
@@ -40,5 +40,6 @@ jobs:
           branch: main
           commit_user_name: "github-actions[bot]"
           commit_user_email: "41898282+github-actions[bot]@users.noreply.github.com"
+
 
 
