@@ -1,34 +1,43 @@
 name: Atualizar Capa Correio da Manhã
 
+# Executa todos os dias às 8h (UTC+1 = horário de Portugal)
 on:
   schedule:
-    - cron: "0 6 * * *"
-  workflow_dispatch:
+    - cron: "0 7 * * *"   # 7h UTC = 8h hora local
+  workflow_dispatch:      # Permite correr manualmente
 
 jobs:
   update:
     runs-on: ubuntu-latest
 
     steps:
+      # Passo 1: Fazer checkout do repositório
       - name: Checkout do repositório
         uses: actions/checkout@v3
 
+      # Passo 2: Configurar Python
       - name: Configurar Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
 
+      # Passo 3: Instalar dependências
       - name: Instalar dependências
         run: pip install requests beautifulsoup4
 
-      - name: Executar script da capa
+      # Passo 4: Rodar o script para baixar a capa
+      - name: Atualizar capa
         run: python baixar_capa.py
 
+      # Passo 5: Commit e push da nova capa usando token
       - name: Commit e Push da nova capa
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Atualizar capa automaticamente"
           file_pattern: correio-capa.jpg
-
+          branch: main
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "41898282+github-actions[bot]@users.noreply.github.com"
+          token: ${{ secrets.PAT_TOKEN }}
 
  
