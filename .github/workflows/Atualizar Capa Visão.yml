@@ -1,0 +1,28 @@
+name: Atualizar Capa Visão
+
+on:
+  schedule:
+    - cron: "0 7 * * *"
+  workflow_dispatch:
+
+jobs:
+  update-visao:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - run: pip install requests beautifulsoup4
+
+      - run: python baixar_visao_capa.py
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Atualizar capa Visão automaticamente"
+          file_pattern: visao-capa.jpg
+          branch: main
