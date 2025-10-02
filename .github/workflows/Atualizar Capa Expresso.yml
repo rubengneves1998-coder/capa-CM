@@ -2,7 +2,7 @@ name: Atualizar Capa Expresso
 
 on:
   schedule:
-    - cron: "0 8 * * 5"   # Sexta-feira às 08:00 (Expresso só sai à sexta)
+    - cron: "0 5 * * 5"   # Sexta-feira às 08:00 (Expresso só sai à sexta)
   workflow_dispatch:       # Permite rodar manualmente
 
 jobs:
