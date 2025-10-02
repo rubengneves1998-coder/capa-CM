@@ -2,7 +2,7 @@ name: Atualizar capa A Bola
 
 on:
   schedule:
-    - cron: "0 8 * * *"  # todos os dias às 08:00 UTC
+    - cron: "0 5 * * *"  # todos os dias às 08:00 UTC
   workflow_dispatch:
 
 jobs:
