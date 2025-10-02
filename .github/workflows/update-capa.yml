@@ -2,7 +2,7 @@ name: Atualizar capa do jornal
 
 on:
   schedule:
-    - cron: "0 6 * * *" # todos os dias às 08:00
+    - cron: "0 5 * * *" # todos os dias às 08:00
   workflow_dispatch: # permite rodar manualmente
 
 jobs:
