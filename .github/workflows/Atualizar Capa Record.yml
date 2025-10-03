@@ -2,7 +2,7 @@ name: Atualizar capa Record
 
 on:
   schedule:
-    - cron: "5 7 * * *"
+    - cron: "5 * * *"
   workflow_dispatch:
 
 jobs:
