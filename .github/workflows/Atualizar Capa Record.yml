@@ -1,33 +1,29 @@
-name: Atualizar Capa Record
+name: Atualizar capa Record
 
 on:
   schedule:
-    - cron: "0 5 * * *"   # Todos os dias às 07:00
-  workflow_dispatch:       # Também pode rodar manualmente
+    - cron: "5 7 * * *"
+  workflow_dispatch:
 
 jobs:
-  update-record:
+  update:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout do repositório
-        uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v3
 
-      - name: Configurar Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
+      - name: Pull antes de tudo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
 
       - name: Instalar dependências
         run: pip install requests beautifulsoup4
 
-      - name: Baixar capa do Record
+      - name: Executar script
         run: python baixar_record_capa.py
 
-      - name: Commit e Push se houver mudanças
-        uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Atualizar capa Record automaticamente"
           file_pattern: record-capa.jpg
