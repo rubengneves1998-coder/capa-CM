@@ -1,35 +1,28 @@
-name: Atualizar capa do jornal
+name: Atualizar capa CM
 
 on:
   schedule:
-    - cron: "0 5 * * *" # todos os dias às 08:00
-  workflow_dispatch: # permite rodar manualmente
+    - cron: "0 8 * * *"
+  workflow_dispatch:
 
 jobs:
   update:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Configurar Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
+      - uses: actions/checkout@v3
 
       - name: Instalar dependências
         run: pip install requests beautifulsoup4
 
-      - name: Executar script para baixar capa
+      - name: Executar script
         run: python baixar_capa.py
 
-      - name: Commit e push automáticos
-        uses: stefanzweifel/git-auto-commit-action@v5
+      - name: Pull antes de commit
+        run: git pull --rebase origin main
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Atualizar capa automaticamente"
+          commit_message: "Atualizar capa CM automaticamente"
           file_pattern: correio-capa.jpg
           branch: main
 
