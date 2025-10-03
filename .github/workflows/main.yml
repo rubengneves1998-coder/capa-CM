@@ -1,9 +1,9 @@
-name: Atualizar todas as capas
+name: Atualizar Capas
 
 on:
   schedule:
-    - cron: "0 7 * * *"   # Todos os dias às 07:00
-  workflow_dispatch:      # Permite também executar manualmente
+    - cron: "0 7 * * *"   # Todos os dias às 07:00 UTC (08:00 em Portugal)
+  workflow_dispatch:       # Permite correr manualmente
 
 jobs:
   atualizar:
@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Checkout do repositório
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.PAT_TOKEN }}
 
       - name: Configurar Python
         uses: actions/setup-python@v5
@@ -23,7 +21,7 @@ jobs:
       - name: Instalar dependências
         run: pip install requests beautifulsoup4
 
-      - name: Baixar capas dos jornais e revistas
+      - name: Executar scripts de download das capas
         run: |
           python baixar_capa.py
           python baixar_abola_capa.py
@@ -35,10 +33,12 @@ jobs:
           python baixar_visao_capa.py
           python baixar_sabado_capa.py
 
-      - name: Commit e Push das novas capas
+      - name: Commit e Push das Capas
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Atualizar todas as capas automaticamente"
           file_pattern: "*.jpg"
-          commit_user_name: github-actions[bot]
-          commit_user_email: github-actions[bot]@users.noreply.github.com
+          branch: main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
