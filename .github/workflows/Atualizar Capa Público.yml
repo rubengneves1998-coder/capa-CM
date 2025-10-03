@@ -2,7 +2,7 @@ name: Atualizar Capa Público
 
 on:
   schedule:
-    - cron: "0 5 * * *"   # Todos os dias às 07:00
+    - cron: "3 5 * * *"   # Todos os dias às 07:00
   workflow_dispatch:       # Também pode rodar manualmente
 
 jobs:
