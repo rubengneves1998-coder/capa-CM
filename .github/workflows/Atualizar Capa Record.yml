@@ -2,7 +2,7 @@ name: Atualizar capa Record
 
 on:
   schedule:
-    - cron: "5 * * *"
+    - cron: "1 7 * * *"
   workflow_dispatch:
 
 jobs:
@@ -28,3 +28,4 @@ jobs:
           commit_message: "Atualizar capa Record automaticamente"
           file_pattern: record-capa.jpg
           branch: main
+
