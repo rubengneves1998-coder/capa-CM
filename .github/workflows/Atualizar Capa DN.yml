@@ -2,7 +2,7 @@ name: Atualizar capa Diário de Notícias
 
 on:
   schedule:
-    - cron: "10 7 * * *"
+    - cron: "2 7 * * *"
   workflow_dispatch:
 
 jobs:
